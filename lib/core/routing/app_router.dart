@@ -1,6 +1,6 @@
 import 'package:appointment/core/routing/routes.dart';
-import 'package:appointment/features/login/ui/screens/login_screen.dart';
-import 'package:appointment/features/onBoarding/onboarding_screen.dart';
+import 'package:appointment/authentication/presentation/screens/login_screen.dart';
+import 'package:appointment/app/presentation/screens/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRouter {

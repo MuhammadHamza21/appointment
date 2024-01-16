@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AppTextButton extends StatelessWidget {
   const AppTextButton({
     super.key,
-    required this.title,
+    this.title,
     required this.onPressed,
     this.borderRadius = 16,
     this.backgroundColor,
@@ -18,7 +18,7 @@ class AppTextButton extends StatelessWidget {
     this.buttonHeight,
     this.textStyle,
   });
-  final String title;
+  final String? title;
   final Function() onPressed;
   final double borderRadius;
   final Color? backgroundColor;
@@ -56,7 +56,7 @@ class AppTextButton extends StatelessWidget {
       ),
       onPressed: onPressed,
       child: Text(
-        title,
+        title!,
         style: textStyle ?? TextStyles.font16WhiteSemiBold,
       ),
     );

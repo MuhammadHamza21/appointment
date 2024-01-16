@@ -1,7 +1,7 @@
 import 'package:appointment/core/themes/styles.dart';
-import 'package:appointment/features/onBoarding/widgets/doc_logo_and_name.dart';
-import 'package:appointment/features/onBoarding/widgets/doctor_image_and_text.dart';
-import 'package:appointment/features/onBoarding/widgets/get_started_button.dart';
+import 'package:appointment/app/presentation/widgets/doc_logo_and_name.dart';
+import 'package:appointment/app/presentation/widgets/doctor_image_and_text.dart';
+import 'package:appointment/app/presentation/widgets/get_started_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

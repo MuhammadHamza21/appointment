@@ -16,6 +16,10 @@ class AppTextFormField extends StatelessWidget {
     this.hintStyle,
     this.isObsecureText,
     this.suffixIcon,
+    this.controller,
+    this.textInputAction,
+    this.autofillHints,
+    this.keyboardType,
   });
   final String hintText;
   final EdgeInsetsGeometry? contentPadding;
@@ -25,10 +29,18 @@ class AppTextFormField extends StatelessWidget {
   final TextStyle? hintStyle;
   final bool? isObsecureText;
   final Widget? suffixIcon;
+  final TextEditingController? controller;
+  final TextInputAction? textInputAction;
+  final Iterable<String>? autofillHints;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
+      textInputAction: textInputAction,
+      autofillHints: autofillHints,
+      keyboardType: keyboardType,
       cursorColor: Colors.black,
       decoration: InputDecoration(
         isDense: true,

@@ -1,79 +1,98 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:appointment/authentication/domain/usecases/register.dart';
+import 'package:appointment/authentication/presentation/controller/auth_cubit.dart';
+import 'package:appointment/authentication/presentation/controller/auth_state.dart';
+import 'package:appointment/authentication/presentation/widgets/already_have_account_text.dart';
 import 'package:appointment/authentication/presentation/widgets/alternative_sign_in_buttons_widget.dart';
-import 'package:appointment/core/helpers/extensions.dart';
+import 'package:appointment/authentication/presentation/widgets/gender_selection_widget.dart';
+import 'package:appointment/authentication/presentation/widgets/sign_in_with_widget.dart';
+import 'package:appointment/authentication/presentation/widgets/terms_and_conditions_text.dart';
+import 'package:appointment/core/helpers/spacing.dart';
 import 'package:appointment/core/methods/validate_email.dart';
-import 'package:appointment/core/routing/routes.dart';
+import 'package:appointment/core/themes/colors.dart';
+import 'package:appointment/core/themes/styles.dart';
+import 'package:appointment/core/widgets/app_phone_field.dart';
+import 'package:appointment/core/widgets/app_text_button.dart';
+import 'package:appointment/core/widgets/app_text_form_field.dart';
 import 'package:appointment/core/widgets/circular_progress_indicator.dart';
 import 'package:appointment/core/widgets/snackbar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:appointment/authentication/domain/usecases/login.dart';
-import 'package:appointment/authentication/presentation/controller/auth_cubit.dart';
-import 'package:appointment/authentication/presentation/controller/auth_state.dart';
-import 'package:appointment/authentication/presentation/widgets/already_have_account_text.dart';
-import 'package:appointment/authentication/presentation/widgets/sign_in_with_widget.dart';
-import 'package:appointment/authentication/presentation/widgets/terms_and_conditions_text.dart';
-import 'package:appointment/core/helpers/spacing.dart';
-import 'package:appointment/core/themes/colors.dart';
-import 'package:appointment/core/themes/styles.dart';
-import 'package:appointment/core/widgets/app_text_button.dart';
-import 'package:appointment/core/widgets/app_text_form_field.dart';
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final formKey = GlobalKey<FormState>();
-  bool isObsecureText = true;
+class _RegisterScreenState extends State<RegisterScreen> {
   var emailController = TextEditingController();
+  var nameController = TextEditingController();
   var passwordController = TextEditingController();
-
+  var mobileController = TextEditingController();
+  bool isObsecureText = true;
+  int groupValue = 0;
+  var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 50.h),
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 50.h,
+              horizontal: 30.w,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Welcome Back",
+                  "Create Account",
                   style: TextStyles.font24BlueBold,
                 ),
                 verticalSpace(8),
                 Text(
-                  "We're excited to have you back, can't wait to see what you've been up to since you last logged in.",
+                  "Sign up now and start exploring all that our app has to offer. We're excited to welcome you to our community!",
                   style: TextStyles.font14GreyRegular,
                 ),
-                verticalSpace(36),
+                verticalSpace(17),
                 Form(
                   key: formKey,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AppTextFormField(
-                        hintText: "Email",
+                        controller: nameController,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name,
+                        autofillHints: const [
+                          AutofillHints.name,
+                        ],
+                        validateText: "Name must not be empty",
+                        hintText: "Your name",
+                      ),
+                      verticalSpace(16),
+                      AppTextFormField(
                         controller: emailController,
+                        textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.emailAddress,
                         autofillHints: const [
                           AutofillHints.email,
                         ],
                         validateText: "Email must not be empty",
-                        textInputAction: TextInputAction.next,
+                        hintText: "Email",
                       ),
-                      verticalSpace(18),
+                      verticalSpace(16),
                       AppTextFormField(
-                        controller: passwordController,
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.visiblePassword,
                         hintText: "Password",
+                        controller: passwordController,
+                        validateText: "Password must not be empty",
+                        autofillHints: const [
+                          AutofillHints.newPassword,
+                        ],
+                        keyboardType: TextInputType.visiblePassword,
+                        textInputAction: TextInputAction.next,
                         isObsecureText: isObsecureText,
                         suffixIcon: GestureDetector(
                           onTap: () {
@@ -88,61 +107,75 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: AppColors.darkerGrey,
                           ),
                         ),
-                        autofillHints: const [
-                          AutofillHints.password,
-                        ],
-                        validateText: "Password must not be empty",
                       ),
-                      verticalSpace(24),
-                      Align(
-                        alignment: AlignmentDirectional.centerEnd,
+                      verticalSpace(16),
+                      AppPhoneField(
+                        hintText: "Your Number",
+                        controller: mobileController,
+                        textInputAction: TextInputAction.done,
+                        validateText: "Number must not be empty",
+                      ),
+                      verticalSpace(16),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15.w),
                         child: Text(
-                          "Forgot Password?",
-                          style: TextStyles.font13BlueRegular,
+                          "Gender",
+                          style: TextStyles.font14GreyRegular,
                         ),
                       ),
-                      verticalSpace(40),
+                      GenderSelectionWidget(
+                        onChanged: (p) {
+                          setState(() {
+                            groupValue = p!;
+                          });
+                        },
+                        groupValue: groupValue,
+                      ),
+                      verticalSpace(32.h),
                       BlocConsumer<AuthCubit, AuthState>(
                         builder: (context, state) {
-                          final authCubit = AuthCubit.get(context);
-                          return state is LoginLoadingState
+                          return state is RegisterLoadingState
                               ? const CircularProgressIndicatorWidget()
                               : AppTextButton(
-                                  title: "Login",
                                   onPressed: () {
+                                    final authCubit = AuthCubit.get(context);
                                     if (formKey.currentState!.validate()) {
                                       if (validateEmail(
                                           email: emailController.text)) {
                                         FocusManager.instance.primaryFocus!
                                             .unfocus();
-                                        authCubit.login(
-                                          LoginParams(
+                                        authCubit.register(
+                                          RegisterParams(
+                                            name: nameController.text,
+                                            gender: groupValue,
                                             email: emailController.text,
                                             password: passwordController.text,
+                                            mobileNumber: mobileController.text,
                                           ),
                                         );
                                       } else {
                                         SnackbarMessage().showErrorSnackBar(
                                           context: context,
-                                          message: "Invalid email format",
+                                          message: "Invalid Email format",
                                         );
                                       }
                                     }
                                   },
+                                  title: "Create Account",
                                 );
                         },
                         listener: (context, state) {
                           final authCubit = AuthCubit.get(context);
-                          if (state is LoginSuccessState) {
+                          if (state is RegisterSuccessState) {
                             SnackbarMessage().showSuccessSnackBar(
                               context: context,
-                              message: "Logged in Successfully",
+                              message: "Loggedin Succesfully",
                             );
-                          } else if (state is LoginErrorState ||
-                              state is LoginOfflineState) {
+                          } else if (state is RegisterErrorState ||
+                              state is RegisterOfflineState) {
                             SnackbarMessage().showErrorSnackBar(
                               context: context,
-                              message: authCubit.loginMessage,
+                              message: authCubit.registerMessage,
                             );
                           }
                         },
@@ -154,12 +187,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       verticalSpace(32),
                       const TermsAndConditionsText(),
                       verticalSpace(24),
-                      AlreadyHaveAccountText(
-                        title: 'Don\'t have an account? ',
-                        signInOut: "Sign up",
-                        onTap: () {
-                          context.pushNamed(Routes.registerScreen);
-                        },
+                      Center(
+                        child: AlreadyHaveAccountText(
+                          title: "Already have an account? ",
+                          signInOut: "Sign in",
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
                     ],
                   ),

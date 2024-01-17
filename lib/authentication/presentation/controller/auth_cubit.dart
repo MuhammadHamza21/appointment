@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:appointment/authentication/domain/entities/user.dart';
+import 'package:appointment/authentication/domain/usecases/register.dart';
 import 'package:appointment/core/error/failures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,12 +12,16 @@ import 'package:appointment/authentication/presentation/controller/auth_state.da
 
 class AuthCubit extends Cubit<AuthState> {
   final LoginUsecase _loginUsecase;
+  final RegisterUsecase _registerUsecase;
   AuthCubit(
     this._loginUsecase,
+    this._registerUsecase,
   ) : super(AuthInitState());
   static AuthCubit get(BuildContext context) => BlocProvider.of(context);
   User? loginUser;
   String loginMessage = "";
+  User? registerUser;
+  String registerMessage = "";
   FutureOr<void> login(LoginParams params) async {
     emit(LoginLoadingState());
     var result = await _loginUsecase(params);
@@ -32,6 +37,25 @@ class AuthCubit extends Cubit<AuthState> {
       (r) {
         loginUser = r;
         emit(LoginSuccessState());
+      },
+    );
+  }
+
+  FutureOr<void> register(RegisterParams params) async {
+    emit(RegisterLoadingState());
+    var result = await _registerUsecase(params);
+    result.fold(
+      (l) {
+        registerMessage = l.message;
+        if (l is ServerFailure) {
+          emit(RegisterErrorState());
+        } else if (l is OfflineFailure) {
+          emit(RegisterOfflineState());
+        }
+      },
+      (r) {
+        registerUser = r;
+        emit(RegisterSuccessState());
       },
     );
   }

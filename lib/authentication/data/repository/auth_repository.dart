@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:appointment/authentication/domain/usecases/register.dart';
 import 'package:appointment/core/constants/app_constants.dart';
 import 'package:appointment/core/error/exceptions.dart';
 import 'package:dartz/dartz.dart';
@@ -27,6 +28,22 @@ class AuthRepository extends BaseAuthRepository {
         return Left(
           ServerFailure(message: failure.error.message),
         );
+      }
+    } else {
+      return const Left(
+        OfflineFailure(message: AppConstants.offlineErrorMessage),
+      );
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> register(RegisterParams params) async {
+    if (await baseNetworkInfo.isConnected) {
+      try {
+        var result = await baseAuthRemoteDatasource.register(params);
+        return Right(result);
+      } on ServerException catch (failure) {
+        return Left(ServerFailure(message: failure.error.message));
       }
     } else {
       return const Left(

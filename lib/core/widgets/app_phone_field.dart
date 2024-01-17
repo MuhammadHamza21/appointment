@@ -1,12 +1,14 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
+import 'package:appointment/core/themes/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 import 'package:appointment/core/themes/colors.dart';
-import 'package:appointment/core/themes/styles.dart';
 
-class AppTextFormField extends StatelessWidget {
-  const AppTextFormField({
+class AppPhoneField extends StatelessWidget {
+  const AppPhoneField({
     super.key,
     required this.hintText,
     this.contentPadding,
@@ -19,9 +21,9 @@ class AppTextFormField extends StatelessWidget {
     this.controller,
     this.textInputAction,
     this.autofillHints,
-    this.keyboardType,
     this.validateText,
   });
+
   final String hintText;
   final EdgeInsetsGeometry? contentPadding;
   final InputBorder? focusedBorder;
@@ -33,17 +35,20 @@ class AppTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final TextInputAction? textInputAction;
   final Iterable<String>? autofillHints;
-  final TextInputType? keyboardType;
   final String? validateText;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return IntlPhoneField(
       controller: controller,
+      validator: (p0) {
+        if (p0!.number.isEmpty) {
+          return validateText;
+        }
+        return null;
+      },
+      initialCountryCode: 'EG',
       textInputAction: textInputAction,
-      autofillHints: autofillHints,
-      keyboardType: keyboardType,
-      cursorColor: Colors.black,
       decoration: InputDecoration(
         isDense: true,
         contentPadding: contentPadding ??
@@ -87,13 +92,12 @@ class AppTextFormField extends StatelessWidget {
         fillColor: AppColors.moreLightGrey,
         filled: true,
       ),
-      obscureText: isObsecureText ?? false,
-      style: TextStyles.font14DarkBlueMedium,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return validateText;
-        }
-        return null;
+      languageCode: "en",
+      onChanged: (phone) {
+        print(phone.completeNumber);
+      },
+      onCountryChanged: (country) {
+        print('Country changed to: ${country.name}');
       },
     );
   }

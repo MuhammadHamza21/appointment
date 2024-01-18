@@ -21,6 +21,7 @@ class AppTextFormField extends StatelessWidget {
     this.autofillHints,
     this.keyboardType,
     this.validateText,
+    this.onFieldSubmitted,
   });
   final String hintText;
   final EdgeInsetsGeometry? contentPadding;
@@ -35,6 +36,7 @@ class AppTextFormField extends StatelessWidget {
   final Iterable<String>? autofillHints;
   final TextInputType? keyboardType;
   final String? validateText;
+  final Function(String)? onFieldSubmitted;
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +97,7 @@ class AppTextFormField extends StatelessWidget {
         }
         return null;
       },
+      onFieldSubmitted: onFieldSubmitted,
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:appointment/core/methods/validate_email.dart';
 import 'package:appointment/core/routing/routes.dart';
 import 'package:appointment/core/widgets/circular_progress_indicator.dart';
 import 'package:appointment/core/widgets/snackbar_message.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -96,9 +97,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       verticalSpace(24),
                       Align(
                         alignment: AlignmentDirectional.centerEnd,
-                        child: Text(
-                          "Forgot Password?",
-                          style: TextStyles.font13BlueRegular,
+                        child: RichText(
+                          text: TextSpan(
+                            text: "Forgot Password?",
+                            style: TextStyles.font13BlueRegular,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => context
+                                  .pushNamed(Routes.forgotPasswordScreen),
+                          ),
                         ),
                       ),
                       verticalSpace(40),
@@ -134,10 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         listener: (context, state) {
                           final authCubit = AuthCubit.get(context);
                           if (state is LoginSuccessState) {
-                            SnackbarMessage().showSuccessSnackBar(
-                              context: context,
-                              message: "Logged in Successfully",
-                            );
+                            context.pushNamed(Routes.otpVerificationScreen);
                           } else if (state is LoginErrorState ||
                               state is LoginOfflineState) {
                             SnackbarMessage().showErrorSnackBar(

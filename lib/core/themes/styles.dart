@@ -87,4 +87,10 @@ class TextStyles {
     color: Colors.black,
     fontWeight: FontWeightHelper.medium,
   );
+
+  static TextStyle font14DarkerGreyMedium = const TextStyle(
+    fontSize: 14,
+    color: Color(0xFFC2C2C2),
+    fontWeight: FontWeightHelper.medium,
+  );
 }

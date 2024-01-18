@@ -23,3 +23,11 @@ class RegisterLoadingState extends AuthState {}
 class RegisterOfflineState extends AuthState {}
 
 class RegisterErrorState extends AuthState {}
+
+class CheckOtpCodeSuccessState extends AuthState {}
+
+class CheckOtpCodeLoadingState extends AuthState {}
+
+class CheckOtpCodeOfflineState extends AuthState {}
+
+class CheckOtpCodeErrorState extends AuthState {}

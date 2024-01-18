@@ -22,13 +22,15 @@ class ErrorModel extends ErrorEntity {
   });
 
   factory ErrorModel.fromJson(Map<String, dynamic> json) => ErrorModel(
-        message: json['data']['email'] != null
-            ? json['data']['email'][0]
-            : json['data']['phone'] != null
-                ? json['data']['phone'][0]
-                : json['data']['password'] != null
-                    ? json['data']['password'][0]
-                    : json['message'],
+        message: json['data']['name'] != null
+            ? json['data']['name'][0]
+            : json['data']['email'] != null
+                ? json['data']['email'][0]
+                : json['data']['phone'] != null
+                    ? json['data']['phone'][0]
+                    : json['data']['password'] != null
+                        ? json['data']['password'][0]
+                        : json['message'],
         code: json['code'],
         status: json['status'],
       );

@@ -59,4 +59,10 @@ class AuthCubit extends Cubit<AuthState> {
       },
     );
   }
+
+  FutureOr<void> checkOtpCode() async {
+    emit(CheckOtpCodeLoadingState());
+    await Future.delayed(const Duration(seconds: 3));
+    emit(CheckOtpCodeSuccessState());
+  }
 }

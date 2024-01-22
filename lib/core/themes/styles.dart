@@ -88,9 +88,33 @@ class TextStyles {
     fontWeight: FontWeightHelper.medium,
   );
 
-  static TextStyle font14DarkerGreyMedium = const TextStyle(
-    fontSize: 14,
-    color: Color(0xFFC2C2C2),
+  static TextStyle font14DarkerGreyMedium = TextStyle(
+    fontSize: 14.sp,
+    color: const Color(0xFFC2C2C2),
     fontWeight: FontWeightHelper.medium,
+  );
+
+  static TextStyle font18BlackBold = TextStyle(
+    fontSize: 18.sp,
+    color: const Color(0xFF242424),
+    fontWeight: FontWeightHelper.bold,
+  );
+
+  static TextStyle font18WhiteMedium = TextStyle(
+    fontSize: 18.sp,
+    color: Colors.white,
+    fontWeight: FontWeightHelper.medium,
+  );
+
+  static TextStyle font18BlackSemibold = TextStyle(
+    fontSize: 18.sp,
+    color: const Color(0XFF242424),
+    fontWeight: FontWeightHelper.semiBold,
+  );
+
+  static TextStyle font13BlackRegular = TextStyle(
+    fontSize: 13.sp,
+    color: const Color(0XFF242424),
+    fontWeight: FontWeightHelper.regular,
   );
 }

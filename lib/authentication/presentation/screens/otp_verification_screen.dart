@@ -1,7 +1,9 @@
 import 'package:appointment/authentication/presentation/controller/auth_cubit.dart';
 import 'package:appointment/authentication/presentation/controller/auth_state.dart';
 import 'package:appointment/authentication/presentation/widgets/otp_field_widget.dart';
+import 'package:appointment/core/helpers/extensions.dart';
 import 'package:appointment/core/helpers/spacing.dart';
+import 'package:appointment/core/routing/routes.dart';
 import 'package:appointment/core/themes/styles.dart';
 import 'package:appointment/core/widgets/app_back_button.dart';
 import 'package:appointment/core/widgets/app_text_button.dart';
@@ -70,8 +72,17 @@ class OtpVerificationScreen extends HookWidget {
                 },
                 listener: (context, state) {
                   if (state is CheckOtpCodeSuccessState) {
+                    context.pushNamedAndRemoveUntil(
+                      Routes.homeLayout,
+                      predicate: (_) {
+                        return true;
+                      },
+                    );
                   } else if (state is CheckOtpCodeErrorState ||
-                      state is CheckOtpCodeOfflineState) {}
+                      state is CheckOtpCodeOfflineState) {
+                    SnackbarMessage()
+                        .showErrorSnackBar(context: context, message: "Error");
+                  }
                 },
               ),
             ],

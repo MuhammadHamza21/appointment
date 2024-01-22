@@ -1,3 +1,4 @@
+import 'package:appointment/app/presentation/layouts/home_layout.dart';
 import 'package:appointment/authentication/presentation/screens/forgot_password_screen.dart';
 import 'package:appointment/authentication/presentation/screens/otp_verification_screen.dart';
 import 'package:appointment/authentication/presentation/screens/register_screen.dart';
@@ -28,6 +29,10 @@ class AppRouter {
       case Routes.otpVerificationScreen:
         return MaterialPageRoute(
           builder: (_) => const OtpVerificationScreen(),
+        );
+      case Routes.homeLayout:
+        return MaterialPageRoute(
+          builder: (_) => const HomeLayout(),
         );
       default:
         return MaterialPageRoute(

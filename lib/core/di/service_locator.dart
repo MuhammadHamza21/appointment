@@ -1,3 +1,4 @@
+import 'package:appointment/app/presentation/controller/app_cubit.dart';
 import 'package:appointment/authentication/data/data_source/remote_data_source.dart';
 import 'package:appointment/authentication/data/repository/auth_repository.dart';
 import 'package:appointment/authentication/domain/repository/base_auth_repository.dart';
@@ -29,6 +30,7 @@ class ServiceLocator {
     sl.registerLazySingleton(() => RegisterUsecase(baseAuthRepository: sl()));
     // Bloc
     sl.registerFactory(() => AuthCubit(sl(), sl()));
+    sl.registerFactory(() => AppCubit());
     // external
     sl.registerLazySingleton(() => InternetConnectionChecker());
     sl.registerLazySingleton<BaseNetworkInfo>(

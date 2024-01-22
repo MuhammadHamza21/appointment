@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:appointment/app/presentation/controller/app_cubit.dart';
 import 'package:appointment/authentication/presentation/controller/auth_cubit.dart';
 import 'package:appointment/core/di/service_locator.dart';
 import 'package:appointment/core/routing/routes.dart';
@@ -24,6 +25,7 @@ class DocApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => sl<AuthCubit>()),
+          BlocProvider(create: (context) => sl<AppCubit>()),
         ],
         child: MaterialApp(
           title: 'DocApp',
